@@ -1,0 +1,9 @@
+pip install opencv-python
+pip install face_recognition 
+	pip install cmake
+	pip install dlib
+		errors when not a same version downloaded download the same version as the python version
+
+
+to avoid errors make a virual env and intall all these files to avoid confusion
+to install inside venv use cmd py -m pip install 
