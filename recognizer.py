@@ -1,18 +1,24 @@
 import cv2
 import numpy as np
 import face_recognition
-import encode
-import markattend
+import Mark_Attend
+import mySql_fetch
 
 classNames = []
 inclass=[]
+
 #print(myList)
-encodeListKnown=encode.addimages(classNames)
+#encodeListKnown=encode.addimages(classNames)
+
+encodeListKnown=mySql_fetch.get_en_db(classNames)
 
 print('Encoding Complete')
 
+#print(encodeListKnown)
+#quit()
+
 cap = cv2.VideoCapture(0)
-f=True
+f = True
 while True:
     success, img = cap.read()
     imgS = cv2.resize(img, (0, 0), None, 0.25, 0.25)
@@ -37,18 +43,16 @@ while True:
 
             if name not in inclass:
                 print(name," entered class")
-                encode.markAttendance(name)
+                Mark_Attend.markAttendance(name)
                 inclass.append(name)
-                f=True
+                f = True
             elif(f):
-                print(name," already in class")
-                f=False
+                print(name , " already in class")
+                f = False
             
-
     cv2.imshow('Webcam', img)
     if cv2.waitKey(1)==ord(" "):
-        markattend.check()
-        markattend.soting()
+        Mark_Attend.create_csv()
         break
 cap.release()
 cv2.destroyAllWindows()
